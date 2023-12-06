@@ -117,13 +117,7 @@ const Predict = () => {
 
   const navigates = () => {
     // Logic to handle the selected entries, e.g., sending to API or storing in state
-    const postalCodesArray = selectedEntries.map(entry => entry.postalCode)
-                            .filter(code => code !== "");
-    const dataToBeSent = {
-      "route": "RTE02",
-      "postalcode_array":postalCodesArray
-    }
-    navigate("/map",{ state: { dataToBeSent } });
+    navigate("/map",{ state: { selectedEntries } });
   };
 
   // const postalCodeOptions = postalCodes.map((code, i) => ({

@@ -16,13 +16,9 @@ const MapComponent = () => {
     // Function to make a POST request
     const sendPostRequest = async () => {
       if (state) {
-        const { route, postalcode_array } = state.dataToBeSent;
-        console.log(state)
-  
         try {
           const response = await axios.post('http://localhost:8000/route-order', {
-            route,
-            postalcode_array,
+            state
           });
   
           // Handle the response data
