@@ -1,8 +1,9 @@
-import { Button } from "@chakra-ui/react";
+import { Button, Heading, Flex } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { FaPlus } from "react-icons/fa";
 
 const Predict = () => {
   const [selectedEntries, setSelectedEntries] = useState([
@@ -117,30 +118,33 @@ const Predict = () => {
 
   const navigates = () => {
     // Logic to handle the selected entries, e.g., sending to API or storing in state
-    navigate("/map",{ state: { selectedEntries } });
+    navigate("/map", { state: { selectedEntries } });
   };
 
-  // const postalCodeOptions = postalCodes.map((code, i) => ({
-  //   value: code,
-  //   label: code,
-  // }));
-
   return (
-    <div>
-      <h1>Specimen Collection - Route Prediction</h1>
+    <div style={{ backgroundColor: "teal", height: "100vh" }}>
+      <Heading as="h2" color="white" marginLeft="25vw" paddingTop="20px">
+        {" "}
+        Specimen Collection - Route Prediction
+      </Heading>
       {selectedEntries.map((entry, index) => (
         <div
           key={index}
-          style={{
-            border: "1px solid black",
-            padding: "10px",
-            marginBottom: "10px",
+          style={{          
+            marginBottom: "10px",           
+            width: "60vw",
+            margin: "30px",
+            marginLeft: "70px",
+            display:"flex",
+            gap:"10px"
           }}
         >
-          <label>Select Postal Code:</label>
+          <div style={{backgroundColor:"white ",border: "1px solid black", padding: "10px",borderRadius:"5px"}}>
+          <label>Select Postal Code: &nbsp; &nbsp;</label>
           <select
             value={entry.postalCode}
             onChange={(e) => handlePostalCodeChange(e.target.value, index)}
+            style={{ outline: "none", width:"7vw" }}
           >
             <option value="">Select Postal Code</option>
             {postalCodes.map((code, i) => (
@@ -149,7 +153,8 @@ const Predict = () => {
               </option>
             ))}
           </select>
-          <label>Select Time of Specimen Collection:</label>
+          
+          <label> &nbsp; &nbsp;Select Time of Specimen Collection: &nbsp; &nbsp;</label>
           <DatePicker
             selected={entry.dateTime}
             onChange={(date) => handleTimeChange(date, index)}
@@ -158,15 +163,18 @@ const Predict = () => {
             timeIntervals={15}
             dateFormat="h:mm aa"
             placeholderText="Select Time"
+            style={{ outline: "none"}}
           />
+          </div>
           <Button onClick={() => deleteEntry(index)}>X</Button>
         </div>
       ))}
-      <Button onClick={addEntry}>Add Entry</Button>
-      <br/>
-      <br/>
+      <Flex gap="10px" marginLeft="70px">
+      <Button onClick={addEntry}>
+        <FaPlus /> 
+      </Button>
       <Button onClick={navigates}>Get Route Analysis</Button>
-      <Button>Get Selected Vehicle</Button>
+      </Flex>
     </div>
   );
 };
