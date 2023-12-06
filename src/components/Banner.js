@@ -1,6 +1,7 @@
 import React from 'react';
 import { Flex, Box, Heading, Text, Image } from '@chakra-ui/react';
-import marker1 from "../assets/hospital.jpg"
+import marker1 from "../assets/ambu1.gif"
+import fp from "../assets/whyus.gif"
 
 const Banner = () => {
   return (
@@ -12,22 +13,23 @@ const Banner = () => {
       justifyContent="space-between"
     >
       <Box flex="1">
-        <Heading size="xl" ml={10} fontFamily="Poppins">
-          Welcome to Our Clinic
+        <Heading size="xl" ml={10} >
+          Welcome to MediRoute
         </Heading>
-        <Text mt={3} ml={10}>
-          We provide compassionate care for your health needs. Our team of <br/> dedicated professionals is here to assist you
-          with comprehensive health services.
+        <Text mt={3} ml={10} fontSize={20}>
+          We provide AI-powered route and vehicle prediction. <br/> We're a team of dedicated professionals to assist you
+          in journey to <br/> optimal resource allocation.
         </Text>
       </Box>
       <Box>
         <Image
-          src={marker1}
+          src={fp}
           alt="Doctors"
           boxSize="200px"
           objectFit="cover"
           borderRadius="full"
-          transform="translateY(-20px)"
+           transform="translateY(-15px) translateX(-115px)"
+    
         />
         <Image
           src={marker1}

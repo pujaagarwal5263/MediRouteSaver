@@ -1,16 +1,14 @@
 import { Button, Heading, Flex } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import { FaPlus } from "react-icons/fa";
 
-const Predict = () => {
+const Vehicle = () => {
   const [selectedEntries, setSelectedEntries] = useState([
-    { postalCode: "", dateTime: null },
+    { postalCode: "", task: "" },
   ]);
-  const navigate = useNavigate();
 
+  const navigate = useNavigate();
   const postalCodes = [
     "SO41 8DJ",
     "SO51 8XA",
@@ -92,23 +90,31 @@ const Predict = () => {
     "SO43 7JP",
   ];
 
+  const taskArray = [
+    "Deliver/Collect post",
+    "Collect dinners (x2)",
+    "Deliver dinners",
+    "Lunch",
+    "Collect dinners",
+    "Deliver dinners (x2)",
+    "Collect samples",
+    "Deliver samples",
+  ];
+
   const handlePostalCodeChange = (value, index) => {
     const updatedEntries = [...selectedEntries];
     updatedEntries[index].postalCode = value;
     setSelectedEntries(updatedEntries);
   };
 
-  const handleTimeChange = (date, index) => {
+  const handleTaskChange = (value, index) => {
     const updatedEntries = [...selectedEntries];
-    updatedEntries[index].dateTime = date;
+    updatedEntries[index].task = value;
     setSelectedEntries(updatedEntries);
   };
 
   const addEntry = () => {
-    setSelectedEntries([
-      ...selectedEntries,
-      { postalCode: "", dateTime: null },
-    ]);
+    setSelectedEntries([...selectedEntries, { postalCode: "", task: "" }]);
   };
 
   const deleteEntry = (index) => {
@@ -117,69 +123,77 @@ const Predict = () => {
   };
 
   const navigates = () => {
-    // Logic to handle the selected entries, e.g., sending to API or storing in state
-    navigate("/map", { state: { selectedEntries } });
+    navigate("/vehicleinfo", { state: { selectedEntries } });
   };
 
   return (
-    <>
-    {/* <Navbar/> */}
     <div style={{ backgroundColor: "teal", height: "100vh" }}>
       <Heading as="h2" color="white" marginLeft="25vw" paddingTop="20px">
         {" "}
-        Specimen Collection - Route Prediction
+        Routine Data - Vehicle Prediction
       </Heading>
       {selectedEntries.map((entry, index) => (
         <div
           key={index}
-          style={{          
-            marginBottom: "10px",           
+          style={{
+            marginBottom: "10px",
             width: "60vw",
             margin: "30px",
             marginLeft: "70px",
-            display:"flex",
-            gap:"10px"
+            display: "flex",
+            gap: "10px",
           }}
         >
-          <div style={{backgroundColor:"white ",border: "1px solid black", padding: "10px",borderRadius:"5px"}}>
-          <label>Select Postal Code: &nbsp; &nbsp;</label>
-          <select
-            value={entry.postalCode}
-            onChange={(e) => handlePostalCodeChange(e.target.value, index)}
-            style={{ outline: "none", width:"7vw" }}
+          <div
+            style={{
+              backgroundColor: "white ",
+              border: "1px solid black",
+              padding: "10px",
+              borderRadius: "5px",
+            }}
           >
-            <option value="">Select Postal Code</option>
-            {postalCodes.map((code, i) => (
-              <option key={i} value={code}>
-                {code}
-              </option>
-            ))}
-          </select>
-          
-          <label> &nbsp; &nbsp;Select Time of Specimen Collection: &nbsp; &nbsp;</label>
-          <DatePicker
-            selected={entry.dateTime}
-            onChange={(date) => handleTimeChange(date, index)}
-            showTimeSelect
-            showTimeSelectOnly
-            timeIntervals={15}
-            dateFormat="h:mm aa"
-            placeholderText="Select Time"
-            style={{ outline: "none"}}
-          />
+            <label>Select Postal Code: &nbsp; &nbsp;</label>
+            <select
+              value={entry.postalCode}
+              onChange={(e) => handlePostalCodeChange(e.target.value, index)}
+              style={{ outline: "none", width: "7vw" }}
+            >
+              <option value="">Select Postal Code</option>
+              {postalCodes.map((code, i) => (
+                <option key={i} value={code}>
+                  {code}
+                </option>
+              ))}
+            </select>
+
+            <label>
+              {" "}
+              &nbsp; &nbsp;Select the Task to be Performed: &nbsp; &nbsp;
+            </label>
+            <select
+              value={entry.task}
+              onChange={(e) => handleTaskChange(e.target.value, index)}
+              style={{ outline: "none", width: "7vw" }}
+            >
+              <option value="">Select Postal Code</option>
+              {taskArray.map((task, i) => (
+                <option key={i} value={task}>
+                  {task}
+                </option>
+              ))}
+            </select>
           </div>
           <Button onClick={() => deleteEntry(index)}>X</Button>
         </div>
       ))}
       <Flex gap="10px" marginLeft="70px">
-      <Button onClick={addEntry}>
-        <FaPlus /> 
-      </Button>
-      <Button onClick={navigates}>Get Route Analysis</Button>
+        <Button onClick={addEntry}>
+          <FaPlus />
+        </Button>
+        <Button onClick={navigates}>Get Vehicle Info</Button>
       </Flex>
     </div>
-    </>
   );
 };
 
-export default Predict;
+export default Vehicle;

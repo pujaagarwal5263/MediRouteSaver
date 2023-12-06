@@ -6,11 +6,13 @@ import L from 'leaflet';
 import marker1 from '../assets/mapmarker.svg';
 import mapmarker from '../assets/ep1.svg';
 import axios from 'axios';
+import { Heading } from '@chakra-ui/react';
 
 const MapComponent = () => {
   const location = useLocation();
   const [markersData, setMarkersData] = useState([]);
   const [routeCoordinates, setrouteCoordinates] = useState([]);
+  const [shortestDistance, setshortestDistance] = useState();
   const { state } = location;
 
     // Function to make a POST request
@@ -23,7 +25,9 @@ const MapComponent = () => {
   
           // Handle the response data
           console.log('Received data:', response.data);
+          
            setMarkersData(response.data.result);
+           setshortestDistance(response.data.shortestDistance)
            //setMarkersData([...markersData,{Postcode: "Destination- Southampton General Hospital", Latitude:50.9331825, Longitude: -1.4344979 }])
         } catch (error) {
           console.error('Error:', error);
@@ -73,7 +77,8 @@ const MapComponent = () => {
     });
   
     return (
-      <MapContainer center={[50.9331825, -1.4344979]} zoom={12} style={{ height: '800px', width: '100%' }}>
+      <>
+      <MapContainer center={[50.9331825, -1.4344979]} zoom={12} style={{ height: '700px', width: '100%' }}>
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         {/* {routeCoordinates.slice(1).map((coords, index) => (
           <Marker key={index} position={coords} icon={intermediateIcon}>
@@ -90,6 +95,10 @@ const MapComponent = () => {
       </Marker>
       <Polyline positions={routeCoordinates} color="blue" />
       </MapContainer>
+      <div style={{marginTop: "15px", marginLeft:"20px"}}>
+      {shortestDistance ? <Heading as="h6" size="md">Shortest Distance among the points: <span style={{color:"blue"}}>{shortestDistance} km</span></Heading> : <p></p> }
+      </div>
+      </>
     );
   };
   

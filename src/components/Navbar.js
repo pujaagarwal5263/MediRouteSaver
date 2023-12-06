@@ -24,6 +24,7 @@ const Navbar = () => {
             fontSize="20px"
             mr={2}
             _hover={{ color: 'black', bg: 'white' }}
+            onClick={() => navigate('/')}
           />
         </Tooltip>
         <Tooltip label="About" hasArrow>
@@ -57,6 +58,7 @@ const Navbar = () => {
             color="white"
             fontSize="20px"
             _hover={{ color: 'black', bg: 'white' }}
+            onClick={() => navigate('/vehicle')}
           />
         </Tooltip>
       </Flex>
