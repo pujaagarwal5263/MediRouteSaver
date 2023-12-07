@@ -15,7 +15,7 @@ const VehicleInfo = () => {
   const sendPostRequest = async () => {
     if (state) {
       try {
-        const response = await axios.post('http://localhost:8000/vehicle-prediction', {
+        const response = await axios.post('https://mediroute-backend.onrender.com/vehicle-prediction', {
           state,
         });
 

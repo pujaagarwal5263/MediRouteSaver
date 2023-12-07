@@ -19,7 +19,7 @@ const MapComponent = () => {
     const sendPostRequest = async () => {
       if (state) {
         try {
-          const response = await axios.post('http://localhost:8000/route-order', {
+          const response = await axios.post('https://mediroute-backend.onrender.com/route-order', {
             state
           });
   
