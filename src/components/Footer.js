@@ -1,7 +1,5 @@
 import React from 'react';
-import { Flex, Heading, Spacer, IconButton, Tooltip, Text } from '@chakra-ui/react';
-import { MdHome, MdInfo, MdDirections, MdDirectionsCar, MdLocalHospital } from 'react-icons/md';
-import { useNavigate } from 'react-router-dom';
+import { Flex, Heading, Spacer,  Text } from '@chakra-ui/react';
 
 const Footer = () => {
   return (

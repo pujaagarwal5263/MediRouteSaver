@@ -1,4 +1,12 @@
-import { Button, Heading, Flex } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Heading,
+  Input,
+  Button,
+  Spacer,
+  useToast,
+} from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
@@ -10,6 +18,10 @@ const Predict = () => {
     { postalCode: "", dateTime: null },
   ]);
   const navigate = useNavigate();
+
+  const toast = useToast();
+
+
 
   const postalCodes = [
     "SO41 8DJ",
@@ -105,10 +117,22 @@ const Predict = () => {
   };
 
   const addEntry = () => {
-    setSelectedEntries([
-      ...selectedEntries,
-      { postalCode: "", dateTime: null },
-    ]);
+    if (selectedEntries == "") {
+      setSelectedEntries([
+        ...selectedEntries,
+        { postalCode: "", dateTime: null },
+      ]);
+    } else {
+      // Show an error message or take other appropriate actions
+      toast({
+        title: "Validation Error",
+        description: "Please fill in all fields before proceeding.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+   
   };
 
   const deleteEntry = (index) => {
@@ -116,47 +140,72 @@ const Predict = () => {
     setSelectedEntries(updatedEntries);
   };
 
+  const validateEntries = () => {
+    // Check if any postal code is empty or if any date/time is not selected
+    return selectedEntries.every(
+      (entry) => entry.postalCode.trim() !== "" && entry.dateTime !== null
+    );
+  };
+
   const navigates = () => {
-    // Logic to handle the selected entries, e.g., sending to API or storing in state
-    navigate("/map", { state: { selectedEntries } });
+  
+    if (validateEntries()) {
+      // Logic to handle the selected entries, e.g., sending to API or storing in state
+      navigate("/map", { state: { selectedEntries } });
+    } else {
+      // Show an error message or take other appropriate actions
+      console.error("Please fill in all fields before proceeding.");
+      toast({
+        title: "Validation Error",
+        description: "Please fill in all fields before proceeding.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
   };
 
   return (
-    <>
-    {/* <Navbar/> */}
-    <div style={{ backgroundColor: "teal", height: "100vh" }}>
-      <Heading as="h2" color="white" marginLeft="25vw" paddingTop="20px">
-        {" "}
+    <Box
+      bgGradient="linear(to-br, teal.500, teal.800)"
+      height="100vh"
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+      justifyContent="center"
+      p="6"
+      animation="fadeIn 1s ease-in-out"
+    >
+      <Heading as="h2" color="white" mb="6">
         Specimen Collection - Route Prediction
       </Heading>
       {selectedEntries.map((entry, index) => (
-        <div
+        <Flex
           key={index}
-          style={{          
-            marginBottom: "10px",           
-            width: "60vw",
-            margin: "30px",
-            marginLeft: "70px",
-            display:"flex",
-            gap:"10px"
-          }}
+          align="center"
+          mb="4"
+          width="80%"
+          bg="white"
+          border="1px solid black"
+          borderRadius="5px"
+          p="4"
         >
-          <div style={{backgroundColor:"white ",border: "1px solid black", padding: "10px",borderRadius:"5px"}}>
           <label>Select Postal Code: &nbsp; &nbsp;</label>
-          <select
+          <Input
+            type="text"
+            list="postalCodes"
             value={entry.postalCode}
             onChange={(e) => handlePostalCodeChange(e.target.value, index)}
-            style={{ outline: "none", width:"7vw" }}
-          >
-            <option value="">Select Postal Code</option>
+            placeholder="Enter Postal Code"
+            mr="4"
+          />
+          <datalist id="postalCodes">
             {postalCodes.map((code, i) => (
-              <option key={i} value={code}>
-                {code}
-              </option>
+              <option key={i} value={code} />
             ))}
-          </select>
-          
-          <label> &nbsp; &nbsp;Select Time of Specimen Collection: &nbsp; &nbsp;</label>
+          </datalist>
+
+          <label>Select Time of Specimen Collection: &nbsp; &nbsp;</label>
           <DatePicker
             selected={entry.dateTime}
             onChange={(date) => handleTimeChange(date, index)}
@@ -165,20 +214,23 @@ const Predict = () => {
             timeIntervals={15}
             dateFormat="h:mm aa"
             placeholderText="Select Time"
-            style={{ outline: "none"}}
+            style={{ outline: "none" }}
           />
-          </div>
-          <Button onClick={() => deleteEntry(index)}>X</Button>
-        </div>
+
+          <Spacer />
+
+          <Button onClick={() => deleteEntry(index)} ml="4">
+            X
+          </Button>
+        </Flex>
       ))}
-      <Flex gap="10px" marginLeft="70px">
-      <Button onClick={addEntry}>
-        <FaPlus /> 
-      </Button>
-      <Button onClick={navigates}>Get Route Analysis</Button>
+      <Flex mt="4" align="center">
+        <Button onClick={addEntry} mr="4">
+          <FaPlus />
+        </Button>
+        <Button onClick={navigates}>Get Route Analysis</Button>
       </Flex>
-    </div>
-    </>
+    </Box>
   );
 };
 
