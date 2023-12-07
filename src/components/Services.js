@@ -84,6 +84,15 @@ const Services = () => {
                 <li key={index}>{point}</li>
               ))}
             </ul>
+            <Button
+              marginTop="30px"
+              backgroundColor="black"
+              color="white"
+              _hover={{ backgroundColor: "black", color: "white" }}
+              onClick={() => navigate("/vehicle")}
+            >
+              Get Started
+            </Button>
           </div>
           <img
             src={ambulance}
