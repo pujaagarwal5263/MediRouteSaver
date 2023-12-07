@@ -1,4 +1,4 @@
-import { Button, Heading, Flex } from "@chakra-ui/react";
+import { Button, Heading, Flex,Input } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
@@ -153,18 +153,19 @@ const Vehicle = () => {
             }}
           >
             <label>Select Postal Code: &nbsp; &nbsp;</label>
-            <select
-              value={entry.postalCode}
-              onChange={(e) => handlePostalCodeChange(e.target.value, index)}
-              style={{ outline: "none", width: "7vw" }}
-            >
-              <option value="">Select Postal Code</option>
-              {postalCodes.map((code, i) => (
-                <option key={i} value={code}>
-                  {code}
-                </option>
-              ))}
-            </select>
+            <Input
+            type="text"
+            list="postalCodes"
+            value={entry.postalCode}
+            onChange={(e) => handlePostalCodeChange(e.target.value, index)}
+            placeholder="Enter Postal Code"
+            mr="4"
+          />
+            <datalist id="postalCodes">
+            {postalCodes.map((code, i) => (
+              <option key={i} value={code} />
+            ))}
+          </datalist>
 
             <label>
               {" "}
