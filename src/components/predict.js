@@ -117,22 +117,11 @@ const Predict = () => {
   };
 
   const addEntry = () => {
-    if (selectedEntries == "") {
-      setSelectedEntries([
-        ...selectedEntries,
-        { postalCode: "", dateTime: null },
-      ]);
-    } else {
-      // Show an error message or take other appropriate actions
-      toast({
-        title: "Validation Error",
-        description: "Please fill in all fields before proceeding.",
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-      });
-    }
-   
+    
+    setSelectedEntries([
+      ...selectedEntries,
+      { postalCode: "", dateTime: null },
+    ]);
   };
 
   const deleteEntry = (index) => {
