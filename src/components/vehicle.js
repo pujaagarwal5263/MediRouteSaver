@@ -1,4 +1,4 @@
-import { Button, Heading, Flex,Input } from "@chakra-ui/react";
+import { Button, Heading, Flex,Input,Box } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
@@ -127,33 +127,96 @@ const Vehicle = () => {
   };
 
   return (
-    <div style={{ backgroundColor: "teal", height: "100vh" }}>
-      <Heading as="h2" color="white" marginLeft="25vw" paddingTop="20px">
-        {" "}
+    // <Box 
+    // bgGradient="linear(to-br, teal.500, teal.800)"
+    // height="100vh"
+    // display="flex"
+    // flexDirection="column"
+    // alignItems="center"
+    // justifyContent="center"
+    // p="6"
+    // animation="fadeIn 1s ease-in-out"
+    // >
+    //   <Heading as="h2" color="white" mb="6">
+    //     Routine Data - Vehicle Prediction
+    //   </Heading>
+    //   {selectedEntries.map((entry, index) => (
+    //     <Flex
+    //     key={index}
+    //     align="center"
+    //     mb="4"
+    //     width="80%"
+    //     bg="white"
+    //     border="1px solid black"
+    //     borderRadius="5px"
+    //     p="4"
+    //       >
+    //         <label>Select Postal Code: &nbsp; &nbsp;</label>
+    //         <Input
+    //         type="text"
+    //         list="postalCodes"
+    //         value={entry.postalCode}
+    //         onChange={(e) => handlePostalCodeChange(e.target.value, index)}
+    //         placeholder="Enter Postal Code"
+    //         mr="4"
+    //       />
+    //         <datalist id="postalCodes">
+    //         {postalCodes.map((code, i) => (
+    //           <option key={i} value={code} />
+    //         ))}
+    //       </datalist>
+
+    //         <label>
+    //           Select the Task to be Performed: &nbsp; &nbsp;
+    //         </label>
+    //         <select
+    //           value={entry.task}
+    //           onChange={(e) => handleTaskChange(e.target.value, index)}
+    //           style={{ outline: "none", width: "7vw" }}
+    //         >
+    //           <option value="">Select Postal Code</option>
+    //           {taskArray.map((task, i) => (
+    //             <option key={i} value={task}>
+    //               {task}
+    //             </option>
+    //           ))}
+    //         </select>
+    //       <Button onClick={() => deleteEntry(index)}>X</Button>
+    //     </Flex>
+    //   ))}
+    //   <Flex mt="4" align="center">
+    //     <Button onClick={addEntry} mr="4">
+    //       <FaPlus />
+    //     </Button>
+    //     <Button onClick={navigates}>Get Vehicle Info</Button>
+    //   </Flex>
+    // </Box>
+    <Box
+      bgGradient="linear(to-br, teal.500, teal.800)"
+      height="100vh"
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+      justifyContent="center"
+      p="6"
+      animation="fadeIn 1s ease-in-out"
+    >
+      <Heading as="h2" color="white" mb="6">
         Routine Data - Vehicle Prediction
       </Heading>
       {selectedEntries.map((entry, index) => (
-        <div
+        <Flex
           key={index}
-          style={{
-            marginBottom: "10px",
-            width: "60vw",
-            margin: "30px",
-            marginLeft: "70px",
-            display: "flex",
-            gap: "10px",
-          }}
+          align="center"
+          mb="4"
+          width="80%"
+          bg="white"
+          border="1px solid black"
+          borderRadius="5px"
+          p="4"
         >
-          <div
-            style={{
-              backgroundColor: "white ",
-              border: "1px solid black",
-              padding: "10px",
-              borderRadius: "5px",
-            }}
-          >
-            <label>Select Postal Code: &nbsp; &nbsp;</label>
-            <Input
+          <label>Select Postal Code: &nbsp; &nbsp;</label>
+          <Input
             type="text"
             list="postalCodes"
             value={entry.postalCode}
@@ -161,39 +224,36 @@ const Vehicle = () => {
             placeholder="Enter Postal Code"
             mr="4"
           />
-            <datalist id="postalCodes">
+          <datalist id="postalCodes">
             {postalCodes.map((code, i) => (
               <option key={i} value={code} />
             ))}
           </datalist>
 
-            <label>
-              {" "}
-              &nbsp; &nbsp;Select the Task to be Performed: &nbsp; &nbsp;
-            </label>
-            <select
-              value={entry.task}
-              onChange={(e) => handleTaskChange(e.target.value, index)}
-              style={{ outline: "none", width: "7vw" }}
-            >
-              <option value="">Select Postal Code</option>
-              {taskArray.map((task, i) => (
-                <option key={i} value={task}>
-                  {task}
-                </option>
-              ))}
-            </select>
-          </div>
+          <label>Select Task: &nbsp; &nbsp;</label>
+          <select
+            value={entry.task}
+            onChange={(e) => handleTaskChange(e.target.value, index)}
+            style={{ outline: "none", width: "20%", marginRight: "4%" }}
+          >
+            <option value="">Select Task</option>
+            {taskArray.map((task, i) => (
+              <option key={i} value={task}>
+                {task}
+              </option>
+            ))}
+          </select>
+
           <Button onClick={() => deleteEntry(index)}>X</Button>
-        </div>
+        </Flex>
       ))}
-      <Flex gap="10px" marginLeft="70px">
-        <Button onClick={addEntry}>
+      <Flex mt="4" align="center">
+        <Button onClick={addEntry} mr="4">
           <FaPlus />
         </Button>
         <Button onClick={navigates}>Get Vehicle Info</Button>
       </Flex>
-    </div>
+    </Box>
   );
 };
 
